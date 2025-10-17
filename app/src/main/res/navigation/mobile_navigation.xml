@@ -15,7 +15,11 @@
         android:id="@+id/nav_inmuebles"
         android:name="com.example.tpinmobiliaria.ui.inmuebles.InmuebleFragment"
         android:label="@string/inmuebles"
-        tools:layout="@layout/fragment_inmuebles" />
+        tools:layout="@layout/fragment_inmuebles" >
+        <action
+            android:id="@+id/action_nav_inmuebles_to_detalleInmueble2"
+            app:destination="@id/detalleInmueble2" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_perfil"
@@ -40,4 +44,13 @@
         android:name="com.example.tpinmobiliaria.ui.logOut.LogOutFragment"
         android:label="@string/logout"
         tools:layout="@layout/fragment_log_out" />
+    <fragment
+        android:id="@+id/detalleInmueble2"
+        android:name="com.example.tpinmobiliaria.ui.inmuebles.DetalleInmueble"
+        android:label="Detalle del Inmueble"
+        tools:layout="@layout/fragment_detalle_inmueble" >
+        <action
+            android:id="@+id/action_detalleInmueble2_to_nav_inmuebles"
+            app:destination="@id/nav_inmuebles" />
+    </fragment>
 </navigation>
