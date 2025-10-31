@@ -19,4 +19,5 @@
     <string name="inquilino">Inquilino</string>
     <string name="contrato">Contrato</string>
     <string name="logout">LogOut</string>
+    <string name="contratos_vigentes">Contratos vigentes</string>
 </resources>

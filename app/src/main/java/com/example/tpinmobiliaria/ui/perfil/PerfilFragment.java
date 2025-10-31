@@ -52,7 +52,8 @@ public class PerfilFragment extends Fragment {
                         binding.etNombre.getText().toString(),
                         binding.etApellido.getText().toString(),
                         binding.etTelefono.getText().toString(),
-                        binding.etDNI.getText().toString());
+                        binding.etDNI.getText().toString(),
+                        binding.etMail.getText().toString());
             }
         });
         vm.getPropietario().observe(getViewLifecycleOwner(), new Observer<Propietario>() {
@@ -63,6 +64,12 @@ public class PerfilFragment extends Fragment {
                 binding.etDNI.setText(p.getDni());
                 binding.etTelefono.setText(p.getTelefono());
                 binding.etMail.setText(p.getEmail());
+            }
+        });
+        vm.getMensajeErr().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                binding.tvError.setText(s);
             }
         });
         vm.obtenerPerfil();

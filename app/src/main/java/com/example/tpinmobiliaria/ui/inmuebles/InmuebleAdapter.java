@@ -22,7 +22,6 @@ import java.util.List;
 public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHolderInmueble> {
 
     private List<Inmueble> listaInmuebles;
-    private InmuebleViewModel vm;
 
     private Context context;
     private LayoutInflater inflater;
@@ -43,6 +42,7 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolderInmueble holder, int position) {
     Inmueble inmActual = listaInmuebles.get(position);
+
     holder.direccion.setText(inmActual.getDireccion());
     holder.precio.setText(inmActual.getValor()+"");
         Glide.with(context)

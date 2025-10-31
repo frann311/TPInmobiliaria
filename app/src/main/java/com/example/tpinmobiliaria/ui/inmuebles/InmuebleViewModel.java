@@ -1,6 +1,9 @@
 package com.example.tpinmobiliaria.ui.inmuebles;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,7 +12,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.navigation.Navigation;
 
+import com.example.tpinmobiliaria.R;
 import com.example.tpinmobiliaria.models.Inmueble;
 import com.example.tpinmobiliaria.models.Propietario;
 import com.example.tpinmobiliaria.request.ApiClient;
@@ -48,11 +53,13 @@ public class InmuebleViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<List<Inmueble>> call, Throwable throwable) {
                 Log.d("errorInmueble",throwable.getMessage());
-
                 Toast.makeText(getApplication(),"Error al obtener Inmuebles",Toast.LENGTH_LONG).show();
             }
         });
     }
+
+
+
 
 
 }

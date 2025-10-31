@@ -1,5 +1,7 @@
 package com.example.tpinmobiliaria.ui.login;
 
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 
@@ -30,14 +32,32 @@ public class LoginActivity extends AppCompatActivity {
                 vm.logueo(usuario,clave);
             }
         });
-
         vm.getMensajeErr().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 binding.tvMensaje.setText(s);
             }
         });
+        vm.escuchaShake();
 
+        vm.getmshake().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
 
+            }
+        });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vm.escuchaShake();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        vm.desactivaEscucha();
+    }
+
 }

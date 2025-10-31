@@ -70,7 +70,6 @@ public class DetalleInmueble extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         vm = new ViewModelProvider(this).get(DetalleInmuebleViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 

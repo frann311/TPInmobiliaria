@@ -1,7 +1,13 @@
 package com.example.tpinmobiliaria.ui.login;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,16 +18,30 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.tpinmobiliaria.MainActivity;
 import com.example.tpinmobiliaria.request.ApiClient;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivityViewModel extends AndroidViewModel {
+
+    private static final float LIMITE_ACELERACION = 100f;
+    private final String numero = "2664777777";
     private MutableLiveData<String> mensajeErr;
+    private MutableLiveData<Boolean> mshake = new MutableLiveData<>();
+    private SensorManager manager;
+    private List<Sensor> sensores;
+    private ManejaEventos maneja;
+
+
     public LoginActivityViewModel(@NonNull Application application) {
         super(application);
     }
 
+    public LiveData<Boolean> getmshake(){
+        return mshake;
+    }
 
     public LiveData<String> getMensajeErr(){
         if (mensajeErr==null){
@@ -29,9 +49,6 @@ public class LoginActivityViewModel extends AndroidViewModel {
         }
         return mensajeErr;
     }
-
-
-
     public void logueo(String usuario,String contrasenia){
         if (usuario.isEmpty() || contrasenia.isEmpty()){
             mensajeErr.setValue("Ambos campos deben estar completos.");
@@ -74,4 +91,46 @@ public class LoginActivityViewModel extends AndroidViewModel {
         });
     }
 
+
+    public void escuchaShake(){
+         manager = (SensorManager) getApplication().getSystemService(Context.SENSOR_SERVICE);
+        sensores = manager.getSensorList(Sensor.TYPE_ACCELEROMETER);
+        if(sensores.size()>0){
+            maneja = new ManejaEventos();
+            Log.d("ESCUCHA", "Registrando listener en: " + sensores.get(0).getName());
+            manager.registerListener(maneja, sensores.get(0), SensorManager.SENSOR_DELAY_GAME);
+        } else {
+            Log.d("ESCUCHA", "No hay sensores disponibles");
+        }
+    }
+    public void desactivaEscucha(){
+        manager.unregisterListener(maneja);
+    }
+
+
+
+    private class ManejaEventos implements SensorEventListener{
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            float aceleracion = (float) Math.sqrt(x*x + y*y + z*z);
+            if (aceleracion > LIMITE_ACELERACION) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + numero));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplication().startActivity(intent);
+            }
+
+
+        }
+    }
 }

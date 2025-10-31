@@ -11,9 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 
+import com.example.tpinmobiliaria.R;
 import com.example.tpinmobiliaria.databinding.FragmentInmueblesBinding;
 import com.example.tpinmobiliaria.models.Inmueble;
 import com.example.tpinmobiliaria.ui.perfil.PerfilViewModel;
@@ -31,6 +33,14 @@ public class InmuebleFragment extends Fragment {
         vm = new ViewModelProvider(this).get(InmuebleViewModel.class);
         binding = FragmentInmueblesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        binding.fabAgregarInmueble.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main).navigate(R.id.agregarInmueble);
+            }
+        });
+
 
 
         vm.getListaInmuebles().observe(getViewLifecycleOwner(), new Observer<List<Inmueble>>() {

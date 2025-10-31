@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_inmuebles_to_detalleInmueble2"
             app:destination="@id/detalleInmueble2" />
+        <action
+            android:id="@+id/action_nav_inmuebles_to_agregarInmueble"
+            app:destination="@id/agregarInmueble" />
     </fragment>
 
     <fragment
@@ -30,14 +33,22 @@
     <fragment
         android:id="@+id/nav_contrato"
         android:name="com.example.tpinmobiliaria.ui.contratos.ContratoFragment"
-        android:label="@string/contrato"
-        tools:layout="@layout/fragment_contrato" />
+        android:label="@string/contratos_vigentes"
+        tools:layout="@layout/fragment_contrato" >
+        <action
+            android:id="@+id/action_nav_contrato_to_detalleContrato"
+            app:destination="@id/detalleContrato" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_inquilino"
         android:name="com.example.tpinmobiliaria.ui.inquilinos.InquilinoFragment"
         android:label="@string/inquilino"
-        tools:layout="@layout/fragment_inquilino" />
+        tools:layout="@layout/fragment_inquilino" >
+        <action
+            android:id="@+id/action_nav_inquilino_to_detalleContrato"
+            app:destination="@id/detalleContrato" />
+    </fragment>
 
     <fragment
         android:id="@+id/logOutFragment"
@@ -52,5 +63,38 @@
         <action
             android:id="@+id/action_detalleInmueble2_to_nav_inmuebles"
             app:destination="@id/nav_inmuebles" />
+    </fragment>
+    <fragment
+        android:id="@+id/agregarInmueble"
+        android:name="com.example.tpinmobiliaria.ui.inmuebles.AgregarInmueble"
+        android:label="Agregar inmueble"
+        tools:layout="@layout/fragment_agregar_inmueble" >
+        <action
+            android:id="@+id/action_agregarInmueble_to_nav_inmuebles"
+            app:destination="@id/nav_inmuebles" />
+    </fragment>
+    <fragment
+        android:id="@+id/detalleContrato"
+        android:name="com.example.tpinmobiliaria.ui.contratos.DetalleContrato"
+        android:label="Detalle del contrato"
+        tools:layout="@layout/fragment_detalle_contrato" >
+        <action
+            android:id="@+id/action_detalleContrato_to_nav_contrato"
+            app:destination="@id/nav_contrato" />
+        <action
+            android:id="@+id/action_detalleContrato_to_pagoFragment"
+            app:destination="@id/pagoFragment" />
+        <action
+            android:id="@+id/action_detalleContrato_to_nav_inquilino"
+            app:destination="@id/nav_inquilino" />
+    </fragment>
+    <fragment
+        android:id="@+id/pagoFragment"
+        android:name="com.example.tpinmobiliaria.ui.Pagos.PagoFragment"
+        android:label="Detalle del pago"
+        tools:layout="@layout/fragment_pago" >
+        <action
+            android:id="@+id/action_pagoFragment_to_detalleContrato"
+            app:destination="@id/detalleContrato" />
     </fragment>
 </navigation>
