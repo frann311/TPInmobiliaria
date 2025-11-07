@@ -57,7 +57,7 @@ public class PagoAdapter  extends RecyclerView.Adapter<PagoAdapter.ViewHolderPag
             super(itemView);
             fecha = itemView.findViewById(R.id.tvFechaInicio);
             monto = itemView.findViewById(R.id.tvMonto);
-            numPago = itemView.findViewById(R.id.tvNumPago);
+
             detalle = itemView.findViewById(R.id.tvDetalle);
             estado = itemView.findViewById(R.id.cbEstado);
         }

@@ -27,7 +27,7 @@ import retrofit2.Response;
 public class LoginActivityViewModel extends AndroidViewModel {
 
     private static final float LIMITE_ACELERACION = 100f;
-    private final String numero = "2664777777";
+    private final String numero = "2664319160";
     private MutableLiveData<String> mensajeErr;
     private MutableLiveData<Boolean> mshake = new MutableLiveData<>();
     private SensorManager manager;
@@ -124,7 +124,7 @@ public class LoginActivityViewModel extends AndroidViewModel {
 
             float aceleracion = (float) Math.sqrt(x*x + y*y + z*z);
             if (aceleracion > LIMITE_ACELERACION) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse("tel:" + numero));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getApplication().startActivity(intent);

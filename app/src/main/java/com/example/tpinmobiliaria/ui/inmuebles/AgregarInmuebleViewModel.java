@@ -38,6 +38,8 @@ public class AgregarInmuebleViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> mInmuebleAgregado = new MutableLiveData<>();
 
     private MutableLiveData<Uri> uriMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mCargando = new MutableLiveData<>();
+
 
     public AgregarInmuebleViewModel(@NonNull Application application) {
         super(application);
@@ -55,7 +57,7 @@ public class AgregarInmuebleViewModel extends AndroidViewModel {
     public LiveData<Uri> getUriMutableLiveData() {
         return uriMutableLiveData;
     }
-
+    public LiveData<Boolean> getCargando() { return mCargando; }
     public void agregarInmueble(String direccion, String uso, String tipo, String ambientes, String superficie, String valor, boolean disponible, String latitud, String longitud) {
         if (direccion.isEmpty() || uso.isEmpty() || tipo.isEmpty() ||
                 ambientes.isEmpty() || superficie.isEmpty() || valor.isEmpty()) {
@@ -155,12 +157,14 @@ public class AgregarInmuebleViewModel extends AndroidViewModel {
         Log.d("agregarInmueble", "imagenPart: " + imagenPart);
         //LLAMA AL API
         Log.d("agregarInmueble", "LLAMA AL API");
+        mCargando.setValue(true);
         ApiClient.InmoServis api = ApiClient.getInmoServis();
         String token = ApiClient.leerToken(getApplication());
         Call<Inmueble> call = api.CargarInmueble("Bearer " + token,imagenPart, inmuebleBody);
         call.enqueue(new Callback<Inmueble>() {
             @Override
             public void onResponse(Call<Inmueble> call, Response<Inmueble> response) {
+                mCargando.setValue(false);
                 if (response.isSuccessful()){
                     Toast.makeText(getApplication(), "Inmueble guardado correctamente", Toast.LENGTH_LONG).show();
                     Log.d("agregarInmueble", "AGREGADO CORRECATAMENTE");

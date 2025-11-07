@@ -32,7 +32,6 @@ public class AgregarInmueble extends Fragment {
     private FragmentAgregarInmuebleBinding binding;
     private Intent intent;
     private ActivityResultLauncher<Intent> arl;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -89,6 +88,13 @@ public class AgregarInmueble extends Fragment {
             @Override
             public void onChanged(Boolean ok) {
                 Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main).navigate(R.id.nav_inmuebles);
+            }
+        });
+
+        vm.getCargando().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                
             }
         });
         return binding.getRoot();
