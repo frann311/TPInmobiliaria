@@ -16,7 +16,11 @@ import androidx.lifecycle.ViewModel;
 import com.example.tpinmobiliaria.models.Pago;
 import com.example.tpinmobiliaria.request.ApiClient;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class PagoViewModel extends AndroidViewModel {
 
@@ -40,7 +44,15 @@ public class PagoViewModel extends AndroidViewModel {
                 @Override
                 public void onResponse(Call<List<Pago>> call, Response<List<Pago>> response) {
                     if(response.isSuccessful()){
-                        listaPagos.setValue(response.body());
+                        List<Pago> pagos = response.body();
+
+                        for (Pago p : pagos) {
+                            if (p.getFechaPago() != null) {
+                                p.setFechaPago(formatearFecha(p.getFechaPago()));
+                            }
+                        }
+
+                        listaPagos.setValue(pagos);
                     }else{
                         Log.d("recuperarListaPagos", "error en la respuesta: "+ response.code());
                     }
@@ -55,6 +67,26 @@ public class PagoViewModel extends AndroidViewModel {
 
 
 
+    }
+    private String formatearFecha(String fechaOriginal) {
+        if (fechaOriginal == null || fechaOriginal.isEmpty()) return fechaOriginal;
+
+        try {
+            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat nuevoFormat = new SimpleDateFormat("dd/MM/yy", Locale.getDefault());
+
+
+            Date date = originalFormat.parse(fechaOriginal);
+            Log.d("formatearFecha", "fechaOriginal: " + fechaOriginal);
+            Log.d("formatearFecha", "date: " + nuevoFormat.format(date));
+
+            return nuevoFormat.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("formatearFecha", "ERROR AL FORMATEAR FECHA");
+            return fechaOriginal; // Si falla, devuelve tal cual
+        }
     }
 
 }
